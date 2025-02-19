@@ -30,6 +30,12 @@ jobs:
           # Save the process ID to a file so it can be terminated later.
           $proc.Id | Out-File -FilePath cargo.pid
           Write-Output "Tomcat started with Process Id: $($proc.Id)"
+
+      - name: Wait for Tomcat to Start
+        shell: powershell
+        run: |
+          Write-Output "Waiting 120 seconds for Tomcat to start..."
+          Start-Sleep -Seconds 120
           
       - name: Verify Application Availability
         shell: powershell
