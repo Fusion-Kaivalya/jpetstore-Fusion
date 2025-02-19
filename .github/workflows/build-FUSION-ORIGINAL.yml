@@ -11,11 +11,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up JDK 11
+      - name: Set Up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: Build WAR File
         shell: cmd
@@ -42,10 +42,3 @@ jobs:
         run: |
           Write-Output "Verifying application availability at http://localhost:8080/jpetstore/"
           curl.exe -v http://localhost:8080/jpetstore/
-
-      - name: Stop Tomcat Server
-        shell: powershell
-        run: |
-          $pid = Get-Content cargo.pid
-          Write-Output "Stopping process with PID: $pid"
-          Stop-Process -Id $pid -Force
