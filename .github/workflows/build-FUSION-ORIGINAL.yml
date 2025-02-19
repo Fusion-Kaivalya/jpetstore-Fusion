@@ -5,7 +5,7 @@ on:
 
 jobs:
   jpetstore:
-    runs-on: jpetstore-Fusion
+    runs-on: self-hosted
     
     steps:
       # Checkout the repository
