@@ -30,4 +30,16 @@ jobs:
           # Save the process ID to a file so it can be terminated later.
           $proc.Id | Out-File -FilePath cargo.pid
           Write-Output "Tomcat started with Process Id: $($proc.Id)"
+          
+      - name: Verify Application Availability
+        shell: powershell
+        run: |
           Write-Output "Verifying application availability at http://localhost:8080/jpetstore/"
+          curl.exe -v http://localhost:8080/jpetstore/
+          
+      - name: Stop Tomcat Server
+        shell: powershell
+        run: |
+          $pid = Get-Content cargo.pid
+          Write-Output "Stopping process with PID: $pid"
+          Stop-Process -Id $pid -Force
