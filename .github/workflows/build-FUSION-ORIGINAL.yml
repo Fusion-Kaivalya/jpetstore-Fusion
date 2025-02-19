@@ -24,5 +24,5 @@ jobs:
       - name: Start Tomcat Server with Cargo Plugin
         shell: powershell
         run: |
-          mvnw cargo:run -P tomcat9
+          mvnw.cmd cargo:run -P tomcat9
           Write-Output "Verifying application availability at http://localhost:8080/jpetstore/"
