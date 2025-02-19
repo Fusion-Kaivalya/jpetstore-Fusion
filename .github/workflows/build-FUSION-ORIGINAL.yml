@@ -24,5 +24,10 @@ jobs:
       - name: Start Tomcat Server with Cargo Plugin
         shell: powershell
         run: |
-          mvnw.cmd cargo:run -P tomcat9
+          Write-Output "Starting Tomcat using Cargo plugin..."
+          # Start the server in the background and capture its process object.
+          $proc = Start-Process -FilePath .\mvnw.cmd -ArgumentList "cargo:run", "-P", "tomcat9" -PassThru
+          # Save the process ID to a file so it can be terminated later.
+          $proc.Id | Out-File -FilePath cargo.pid
+          Write-Output "Tomcat started with Process Id: $($proc.Id)"
           Write-Output "Verifying application availability at http://localhost:8080/jpetstore/"
