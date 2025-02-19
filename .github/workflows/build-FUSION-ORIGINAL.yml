@@ -8,18 +8,18 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      #- name: Checkout Repository
+       # uses: actions/checkout@v4
 
-      - name: Set Up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
+     # - name: Set Up JDK 17
+     #   uses: actions/setup-java@v4
+     #   with:
+     #     distribution: temurin
+     #     java-version: 17
 
-      - name: Build WAR File
-        shell: cmd
-        run: mvnw.cmd clean package
+    #  - name: Build WAR File
+    #    shell: cmd
+    #    run: mvnw.cmd clean package
 
       - name: Start Tomcat Server with Cargo Plugin
         shell: powershell
