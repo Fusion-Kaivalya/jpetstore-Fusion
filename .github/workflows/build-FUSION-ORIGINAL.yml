@@ -22,8 +22,6 @@ jobs:
     #    run: mvnw.cmd clean package
 
       - name: Start Tomcat Server with Cargo Plugin
-        shell: powershell
+        shell: cmd
         run: |
-          Write-Output "Starting Tomcat using Cargo plugin..."
-          Write-Output "Current working directory: $(Get-Location)"
-          .\mvnw cargo:run -P tomcat9
+          mvnw cargo:run -P tomcat9
