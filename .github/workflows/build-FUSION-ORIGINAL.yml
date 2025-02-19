@@ -1,0 +1,45 @@
+name: JPetStore - Original
+
+on:
+  workflow_dispatch:
+
+jobs:
+  jpetstore:
+    runs-on: jpetstore-Fusion
+    steps:
+      # Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Set up the JDK (Java 11 is used here; adjust if needed)
+      - name: Set Up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+
+      # Ensure the Maven wrapper has execution permissions
+      - name: Make Maven Wrapper Executable
+        run: chmod +x mvnw
+
+      # Build the WAR file using the Maven wrapper
+      - name: Build WAR File
+        run: ./mvnw clean package
+
+      # Start Tomcat using the cargo-maven2-plugin with the "tomcat90" profile
+      # The server is launched in the background using nohup,
+      # and its process ID is saved for later termination.
+      - name: Start Tomcat Server with Cargo Plugin
+        run: |
+          nohup ./mvnw cargo:run -P tomcat90 > cargo.log 2>&1 &
+          echo $! > cargo.pid
+
+      # Wait for the server to start up (adjust sleep time as necessary)
+      - name: Wait for Tomcat to Start
+        run: |
+          echo "Waiting 30 seconds for Tomcat to start..."
+          sleep 30
+
+      # Verify that the application is available in the browser
+      - name: Verify Application Availability
+        run: curl -v http://localhost:8080/jpetstore/
